@@ -9,9 +9,24 @@ import SwiftUI
 
 @main
 struct DatingApp: App {
+    @StateObject private var appState = AppState()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Group {
+                if appState.showLogin {
+                    LoginView()
+                        .environmentObject(appState)
+                        .transition(.opacity)
+                } else if appState.currentUser != nil {
+                    MainTabView()
+                        .environmentObject(appState)
+                        .transition(.opacity)
+                } else {
+                    ProgressView("加载中...")
+                }
+            }
+            .animation(.easeInOut, value: appState.showLogin)
         }
     }
 }
