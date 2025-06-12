@@ -7,6 +7,15 @@ struct LoginView: View {
     @State private var showVerification = false
     @State private var countdown = 60
     @State private var timer: Timer? = nil
+    @State private var isLoading = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    
+    // 登录请求模型
+    struct LoginRequest: Codable {
+        let phoneNumber: String
+        let verificationCode: String
+    }
     
     var body: some View {
         NavigationView {
@@ -183,6 +192,19 @@ struct LoginView: View {
             .onDisappear {
                 stopTimer()
             }
+            .disabled(isLoading)
+            .opacity(isLoading ? 0.7 : 1.0)
+            .overlay {
+                if isLoading {
+                    ProgressView()
+                        .scaleEffect(1.5)
+                }
+            }
+            .alert("提示", isPresented: $showAlert) {
+                Button("确定", role: .cancel) {}
+            } message: {
+                Text(alertMessage)
+            }
         }
     }
     
@@ -210,13 +232,54 @@ struct LoginView: View {
     }
     
     private func login() {
-        // 这里应该调用登录API验证验证码
-        print("登录: \(phoneNumber), 验证码: \(verificationCode)")
+        // 1. 验证输入
+        guard phoneNumber.count == 11 else {
+            alertMessage = "请输入有效的手机号"
+            showAlert = true
+            return
+        }
         
-        // 模拟登录成功
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            withAnimation {
-                appState.showLogin = false
+        guard verificationCode.count == 6 else {
+            alertMessage = "请输入6位验证码"
+            showAlert = true
+            return
+        }
+        
+        // 2. 显示加载状态
+        isLoading = true
+        
+        // 3. 准备登录请求
+        let loginRequest = LoginRequest(
+            phoneNumber: phoneNumber,
+            verificationCode: verificationCode
+        )
+        
+        Task {
+            do {
+                // 模拟网络请求延迟
+                try await Task.sleep(nanoseconds: 1_000_000_000)
+                
+                // 模拟成功响应
+                DispatchQueue.main.async {
+                    // 保存登录状态
+                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                    UserDefaults.standard.set("模拟用户ID", forKey: "userId")
+                    
+                    // 更新应用状态
+                    withAnimation {
+                        appState.isLoggedIn = true
+                        appState.showLogin = false
+                    }
+                    
+                    isLoading = false
+                }
+            } catch {
+                // 处理错误
+                DispatchQueue.main.async {
+                    alertMessage = "登录失败: \(error.localizedDescription)"
+                    showAlert = true
+                    isLoading = false
+                }
             }
         }
     }

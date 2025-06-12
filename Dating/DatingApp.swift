@@ -14,7 +14,7 @@ struct DatingApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                if appState.showLogin {
+                if !appState.isLoggedIn {
                     LoginView()
                         .environmentObject(appState)
                         .transition(.opacity)
@@ -26,7 +26,7 @@ struct DatingApp: App {
                     ProgressView("加载中...")
                 }
             }
-            .animation(.easeInOut, value: appState.showLogin)
+            .animation(.easeInOut, value: appState.isLoggedIn)
         }
     }
 }

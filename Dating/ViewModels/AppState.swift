@@ -12,7 +12,10 @@ class AppState: ObservableObject {
     @Published var matches: [Match] = []
     
     // 是否显示登录界面
-    @Published var showLogin: Bool = true
+    @Published var showLogin: Bool = false
+    
+    // 是否已登录
+    @Published var isLoggedIn: Bool = false
     
     // 是否显示加载指示器
     @Published var isLoading: Bool = false
@@ -26,8 +29,26 @@ class AppState: ObservableObject {
     }
     
     init() {
+        // 检查本地存储的登录状态
+        checkLoginStatus()
+        
         // 模拟数据 - 实际应用中应从网络或本地数据库加载
         loadMockData()
+    }
+    
+    private func checkLoginStatus() {
+        // 从 UserDefaults 检查登录状态
+        isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
+        showLogin = !isLoggedIn
+    }
+    
+    func logout() {
+        // 清除登录状态
+        isLoggedIn = false
+        showLogin = true
+        UserDefaults.standard.set(false, forKey: "isLoggedIn")
+        UserDefaults.standard.removeObject(forKey: "userId")
+        // 可以在这里添加其他清理逻辑，如清除用户数据等
     }
     
     private func loadMockData() {
