@@ -9,43 +9,75 @@
 
 一个基于 SwiftUI 的现代移动端约会应用，提供用户匹配、聊天和个人资料管理等功能。
 
+![App Screenshot](https://via.placeholder.com/300x600.png?text=Dating+App+Screenshot)
+
 </div>
 
 ## 功能特点
 
-- 手机号验证码登录
-- 用户卡片浏览（支持左右滑动喜欢/不喜欢）
-- 图片浏览器（支持缩放和滑动）
-- 匹配列表
-- 个人资料管理
-- 响应式设计，适配各种 iOS 设备
+- 📱 手机号验证码登录
+- 👥 用户卡片浏览（支持左右滑动喜欢/不喜欢）
+- 🖼️ 图片浏览器（支持缩放和滑动）
+- ❤️ 智能匹配系统
+- 🎓 学历筛选功能
+- 📍 地理位置显示
+- 💬 实时聊天功能
+- 🔍 高级筛选条件
+- 🎨 精美动画效果
+- 📱 响应式设计，完美适配各种 iOS 设备
 
 ## 技术栈
 
-| 技术 | 版本 |
-|------|------|
-| ![Swift](https://img.shields.io/badge/Swift-5.5+-orange) | 5.5+ |
-| ![iOS](https://img.shields.io/badge/iOS-15.0+-blue) | 15.0+ |
-| ![Xcode](https://img.shields.io/badge/Xcode-13.0+-blue) | 13.0+ |
-| ![SwiftUI](https://img.shields.io/badge/UI-SwiftUI-blue) | 3.0+ |
-| ![Architecture](https://img.shields.io/badge/Architecture-MVVM-blueviolet) | - |
-| ![SPM](https://img.shields.io/badge/SPM-Compatible-brightgreen) | - |
+### 核心技术栈
+
+| 技术 | 版本 | 用途 |
+|------|------|------|
+| ![Swift](https://img.shields.io/badge/Swift-5.5+-orange) | 5.5+ | 开发语言 |
+| ![iOS](https://img.shields.io/badge/iOS-15.0+-blue) | 15.0+ | 目标平台 |
+| ![Xcode](https://img.shields.io/badge/Xcode-13.0+-blue) | 13.0+ | 开发工具 |
+| ![SwiftUI](https://img.shields.io/badge/UI-SwiftUI-blue) | 3.0+ | UI框架 |
+| ![Combine](https://img.shields.io/badge/Combine-Reactive-blue) | - | 响应式编程 |
+| ![MVVM](https://img.shields.io/badge/Architecture-MVVM-blueviolet) | - | 架构模式 |
+| ![SPM](https://img.shields.io/badge/SPM-Compatible-brightgreen) | - | 依赖管理 |
+
+### 主要功能模块
+
+- **用户认证**：手机号验证码登录
+- **发现页**：滑动浏览推荐用户
+- **匹配系统**：双向喜欢自动匹配
+- **聊天功能**：实时消息通信
+- **个人中心**：个人信息管理
+- **筛选系统**：多条件筛选用户
 
 ## 项目结构
 
 ```
 Dating/
 ├── Dating/
-│   ├── Models/          # 数据模型
-│   ├── ViewModels/      # 视图模型
-│   ├── Views/           # 视图
-│   │   ├── Components/  # 可重用组件
-│   │   ├── DiscoverView.swift
-│   │   ├── LoginView.swift
-│   │   └── ...
-│   └── DatingApp.swift  # 应用入口
-├── Assets.xcassets/     # 图片资源
-└── Preview Content/     # 预览内容
+│   ├── Models/                 # 数据模型
+│   │   ├── User.swift          # 用户模型
+│   │   ├── Match.swift         # 匹配模型
+│   │   └── Education.swift     # 学历模型
+│   │
+│   ├── ViewModels/           # 视图模型
+│   │   └── AppState.swift      # 应用状态管理
+│   │
+│   ├── Views/                # 视图
+│   │   ├── Components/         # 可重用组件
+│   │   │   ├── UserCardView.swift    # 用户卡片
+│   │   │   ├── ImageBrowser.swift    # 图片浏览器
+│   │   │   └── FilterView.swift      # 筛选视图
+│   │   │
+│   │   ├── DiscoverView.swift  # 发现页
+│   │   ├── LoginView.swift     # 登录页
+│   │   ├── MatchesView.swift   # 匹配页
+│   │   ├── MessagesView.swift  # 消息页
+│   │   └── ProfileView.swift   # 个人中心
+│   │
+│   └── DatingApp.swift       # 应用入口
+│
+├── Assets.xcassets/          # 图片资源
+└── Preview Content/            # 预览内容
 ```
 
 ## 快速开始
@@ -95,18 +127,7 @@ Dating/
 - 遵循 Swift API 设计指南
 - 使用有意义的变量和函数名
 
-### 提交信息规范
 
-使用 Conventional Commits 规范：
-
-- `feat:` 新功能
-- `fix:` 修复 bug
-- `docs:` 文档更新
-- `style:` 代码格式调整
-- `refactor:` 代码重构
-- `perf:` 性能优化
-- `test:` 测试相关
-- `chore:` 构建过程或辅助工具的变动
 
 ## 致谢
 

@@ -70,6 +70,7 @@ class AppState: ObservableObject {
             location: "北京市朝阳区",
             gender: .male,
             preference: .female,
+            education: .bachelor,
             lastActive: Date()
         )
         
@@ -88,6 +89,7 @@ class AppState: ObservableObject {
                 location: "北京市海淀区",
                 gender: .female,
                 preference: .male,
+                education: .master,
                 lastActive: Date().addingTimeInterval(-3600)
             ),
             User(
@@ -103,7 +105,23 @@ class AppState: ObservableObject {
                 location: "北京市朝阳区",
                 gender: .female,
                 preference: .male,
+                education: .bachelor,
                 lastActive: Date().addingTimeInterval(-7200)
+            ),
+            User(
+                id: "user_3",
+                name: "张伟",
+                age: 30,
+                bio: "医生，热爱运动和户外活动",
+                photos: [
+                    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60"
+                ],
+                interests: ["运动", "旅游", "阅读", "电影"],
+                location: "上海市浦东新区",
+                gender: .male,
+                preference: .female,
+                education: .doctor,
+                lastActive: Date().addingTimeInterval(-1800)
             )
         ]
         

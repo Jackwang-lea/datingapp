@@ -1,5 +1,17 @@
 import Foundation
 
+// 学历枚举
+enum Education: String, Codable, CaseIterable, Identifiable {
+    case highSchool = "高中"
+    case college = "大专"
+    case bachelor = "本科"
+    case master = "硕士"
+    case doctor = "博士"
+    case other = "其他"
+    
+    var id: String { self.rawValue }
+}
+
 struct User: Identifiable, Codable {
     let id: String
     var name: String
@@ -10,6 +22,7 @@ struct User: Identifiable, Codable {
     var location: String
     var gender: Gender
     var preference: GenderPreference
+    var education: Education
     var lastActive: Date
     
     // 计算属性：显示年龄
