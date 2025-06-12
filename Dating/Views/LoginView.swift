@@ -208,12 +208,29 @@ struct LoginView: View {
         }
     }
     
+    // 模拟验证码（用于开发测试）
+    private let testVerificationCode = "123456"
+    
     private func getVerificationCode() {
-        // 这里应该调用发送验证码的API
-        print("发送验证码到: \(phoneNumber)")
+        // 验证手机号格式
+        guard phoneNumber.count == 11 else {
+            alertMessage = "请输入有效的手机号"
+            showAlert = true
+            return
+        }
         
         // 显示验证码输入框
         showVerification = true
+        
+        // 在开发环境中，直接显示测试验证码
+        #if DEBUG
+        alertMessage = "测试验证码: \(testVerificationCode)"
+        showAlert = true
+        verificationCode = testVerificationCode // 自动填充验证码
+        #else
+        // 生产环境调用发送验证码的API
+        print("发送验证码到: \(phoneNumber)")
+        #endif
         
         // 开始倒计时
         startCountdown()
@@ -267,11 +284,17 @@ struct LoginView: View {
                     
                     // 更新应用状态
                     withAnimation {
-                        appState.isLoggedIn = true
-                        appState.showLogin = false
+                        // 确保先设置 isLoggedIn 为 true
+                        self.appState.isLoggedIn = true
+                        self.appState.showLogin = false
+                        
+                        // 确保用户数据已加载
+                        if self.appState.currentUser == nil {
+                            self.appState.loadMockData()
+                        }
                     }
                     
-                    isLoading = false
+                    self.isLoading = false
                 }
             } catch {
                 // 处理错误

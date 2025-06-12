@@ -32,14 +32,18 @@ class AppState: ObservableObject {
         // 检查本地存储的登录状态
         checkLoginStatus()
         
-        // 模拟数据 - 实际应用中应从网络或本地数据库加载
-        loadMockData()
+        // 只有在未登录或没有当前用户数据时才加载模拟数据
+        if !isLoggedIn || currentUser == nil {
+            loadMockData()
+        }
     }
     
     private func checkLoginStatus() {
         // 从 UserDefaults 检查登录状态
         isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
         showLogin = !isLoggedIn
+        
+        print("检查登录状态: \(isLoggedIn ? "已登录" : "未登录")")
     }
     
     func logout() {
@@ -51,14 +55,17 @@ class AppState: ObservableObject {
         // 可以在这里添加其他清理逻辑，如清除用户数据等
     }
     
-    private func loadMockData() {
+    func loadMockData() {
         // 模拟当前用户
         currentUser = User(
             id: "current_user_1",
             name: "张明",
             age: 28,
             bio: "热爱生活，喜欢旅行和美食，寻找志同道合的伴侣",
-            photos: ["profile_1", "profile_2"],
+            photos: [
+                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=60",
+                "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60"
+            ],
             interests: ["旅行", "美食", "摄影", "电影", "音乐"],
             location: "北京市朝阳区",
             gender: .male,
@@ -73,7 +80,10 @@ class AppState: ObservableObject {
                 name: "李婷",
                 age: 25,
                 bio: "喜欢阅读和旅行，希望找到一个有趣的灵魂",
-                photos: ["user1_1", "user1_2"],
+                photos: [
+                    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60",
+                    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60"
+                ],
                 interests: ["阅读", "旅行", "咖啡", "摄影"],
                 location: "北京市海淀区",
                 gender: .female,
@@ -85,7 +95,10 @@ class AppState: ObservableObject {
                 name: "王芳",
                 age: 27,
                 bio: "程序员小姐姐，喜欢打游戏和看动漫",
-                photos: ["user2_1", "user2_2"],
+                photos: [
+                    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60",
+                    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60"
+                ],
                 interests: ["编程", "游戏", "动漫", "美食"],
                 location: "北京市朝阳区",
                 gender: .female,
