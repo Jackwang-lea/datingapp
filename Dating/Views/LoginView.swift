@@ -180,6 +180,9 @@ struct LoginView: View {
                 .padding(.bottom, 30)
             }
             .navigationBarHidden(true)
+            .onDisappear {
+                stopTimer()
+            }
         }
     }
     
@@ -218,9 +221,9 @@ struct LoginView: View {
         }
     }
     
-    }
-    .onDisappear {
+    private func stopTimer() {
         timer?.invalidate()
+        timer = nil
     }
 }
 

@@ -147,11 +147,13 @@ struct UserCardView: View {
             isLiked = false
             isDisliked = false
         }
-        .imageBrowser(
-            isPresented: $isShowingImageBrowser,
-            imageUrls: user.photos,
-            selectedIndex: $currentIndex
-        )
+        .fullScreenCover(isPresented: $isShowingImageBrowser) {
+            ImageBrowser(
+                isPresented: $isShowingImageBrowser,
+                imageUrls: user.photos,
+                selectedIndex: $currentIndex
+            )
+        }
     }
     
     // 触发喜欢动画
