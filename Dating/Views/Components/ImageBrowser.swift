@@ -1,9 +1,8 @@
 import SwiftUI
-import Kingfisher
 
 struct ImageBrowser: View {
     @Binding var isPresented: Bool
-    let imageUrls: [String]
+    let imageNames: [String]
     @Binding var selectedIndex: Int
     @State private var scale: CGFloat = 1.0
     @State private var lastScale: CGFloat = 1.0
@@ -21,8 +20,8 @@ struct ImageBrowser: View {
             
             // 图片浏览器
             TabView(selection: $selectedIndex) {
-                ForEach(0..<imageUrls.count, id: \.self) { index in
-                    ZoomableImageView(imageUrl: imageUrls[index], 
+                ForEach(0..<imageNames.count, id: \.self) { index in
+                    ZoomableImageView(imageName: imageNames[index], 
                                    scale: $scale, 
                                    lastScale: $lastScale, 
                                    offset: $offset, 
@@ -32,7 +31,7 @@ struct ImageBrowser: View {
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
             .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
-            .onChange(of: selectedIndex) { _ in
+            .onChange(of: selectedIndex) { oldValue, newValue in
                 // 切换图片时重置缩放和偏移
                 withAnimation(.spring()) {
                     scale = 1.0
@@ -56,7 +55,7 @@ struct ImageBrowser: View {
 }
 
 struct ZoomableImageView: View {
-    let imageUrl: String
+    let imageName: String
     @Binding var scale: CGFloat
     @Binding var lastScale: CGFloat
     @Binding var offset: CGSize
@@ -64,7 +63,7 @@ struct ZoomableImageView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            KFImage(URL(string: imageUrl))
+            Image(imageName)
                 .resizable()
                 .scaledToFit()
                 .scaleEffect(scale)
@@ -127,14 +126,14 @@ struct ZoomableImageView: View {
 // MARK: - View Modifier
 struct ImageBrowserModifier: ViewModifier {
     @Binding var isPresented: Bool
-    let imageUrls: [String]
+    let imageNames: [String]
     @Binding var selectedIndex: Int
     
     func body(content: Content) -> some View {
         content
             .fullScreenCover(isPresented: $isPresented) {
                 ImageBrowser(isPresented: $isPresented, 
-                           imageUrls: imageUrls, 
+                           imageNames: imageNames, 
                            selectedIndex: $selectedIndex)
             }
     }
@@ -143,10 +142,10 @@ struct ImageBrowserModifier: ViewModifier {
 // MARK: - View Extension
 extension View {
     func imageBrowser(isPresented: Binding<Bool>, 
-                     imageUrls: [String], 
+                     imageNames: [String], 
                      selectedIndex: Binding<Int>) -> some View {
         self.modifier(ImageBrowserModifier(isPresented: isPresented, 
-                                         imageUrls: imageUrls, 
+                                         imageNames: imageNames, 
                                          selectedIndex: selectedIndex))
     }
 }
@@ -155,7 +154,7 @@ extension View {
 struct ImageBrowser_Previews: PreviewProvider {
     static var previews: some View {
         ImageBrowser(isPresented: .constant(true), 
-                   imageUrls: ["https://example.com/photo1.jpg", "https://example.com/photo2.jpg"], 
+                   imageNames: ["yoko-1", "yoko-2", "photo-placeholder"], 
                    selectedIndex: .constant(0))
     }
 }

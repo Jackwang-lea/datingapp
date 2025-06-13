@@ -56,75 +56,14 @@ class AppState: ObservableObject {
     }
     
     func loadMockData() {
-        // 模拟当前用户
-        currentUser = User(
-            id: "current_user_1",
-            name: "张明",
-            age: 28,
-            bio: "热爱生活，喜欢旅行和美食，寻找志同道合的伴侣",
-            photos: [
-                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=60",
-                "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60"
-            ],
-            interests: ["旅行", "美食", "摄影", "电影", "音乐"],
-            location: "北京市朝阳区",
-            gender: .male,
-            preference: .female,
-            education: .bachelor,
-            lastActive: Date()
-        )
-        
-        // 模拟其他用户
-        users = [
-            User(
-                id: "user_1",
-                name: "李婷",
-                age: 25,
-                bio: "喜欢阅读和旅行，希望找到一个有趣的灵魂",
-                photos: [
-                    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60",
-                    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60"
-                ],
-                interests: ["阅读", "旅行", "咖啡", "摄影"],
-                location: "北京市海淀区",
-                gender: .female,
-                preference: .male,
-                education: .master,
-                lastActive: Date().addingTimeInterval(-3600)
-            ),
-            User(
-                id: "user_2",
-                name: "王芳",
-                age: 27,
-                bio: "程序员小姐姐，喜欢打游戏和看动漫",
-                photos: [
-                    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60",
-                    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60"
-                ],
-                interests: ["编程", "游戏", "动漫", "美食"],
-                location: "北京市朝阳区",
-                gender: .female,
-                preference: .male,
-                education: .bachelor,
-                lastActive: Date().addingTimeInterval(-7200)
-            ),
-            User(
-                id: "user_3",
-                name: "张伟",
-                age: 30,
-                bio: "医生，热爱运动和户外活动",
-                photos: [
-                    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60"
-                ],
-                interests: ["运动", "旅游", "阅读", "电影"],
-                location: "上海市浦东新区",
-                gender: .male,
-                preference: .female,
-                education: .doctor,
-                lastActive: Date().addingTimeInterval(-1800)
-            )
+        // 模拟用户列表，包含我们为预览创建的 mock 用户
+        self.users = [User.mock, 
+                      User(id: "user_2", name: "李婷", age: 25, bio: "喜欢阅读和旅行", imageNames: ["photo-placeholder"], interests: ["阅读", "旅行"], location: "北京", gender: .female, preference: .male, education: .master, lastActive: Date().addingTimeInterval(-3600)),
+                      User(id: "user_3", name: "王芳", age: 27, bio: "程序员小姐姐", imageNames: ["photo-placeholder"], interests: ["编程", "游戏"], location: "上海", gender: .female, preference: .male, education: .bachelor, lastActive: Date().addingTimeInterval(-7200))
         ]
         
+        // 模拟当前登录的用户
+        self.currentUser = users.first
         // 模拟匹配
         matches = [
             Match(
@@ -155,5 +94,16 @@ class AppState: ObservableObject {
     func sendMessage(to userId: String, message: String) {
         // 在实际应用中，这里会调用API
         print("发送消息给 \(userId): \(message)")
+    }
+    
+    // 用于 SwiftUI 预览的 mock 实例
+    static var mock: AppState {
+        let appState = AppState()
+        appState.users = [User.mock, 
+                         User(id: "user_2", name: "李婷", age: 25, bio: "喜欢阅读和旅行", imageNames: ["photo-placeholder"], interests: ["阅读", "旅行"], location: "北京", gender: .female, preference: .male, education: .master, lastActive: Date().addingTimeInterval(-3600)),
+                         User(id: "user_3", name: "王芳", age: 27, bio: "程序员小姐姐", imageNames: ["photo-placeholder"], interests: ["编程", "游戏"], location: "上海", gender: .female, preference: .male, education: .bachelor, lastActive: Date().addingTimeInterval(-7200))
+        ]
+        appState.currentUser = appState.users.first
+        return appState
     }
 }

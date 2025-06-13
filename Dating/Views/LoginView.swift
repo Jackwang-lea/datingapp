@@ -266,7 +266,7 @@ struct LoginView: View {
         isLoading = true
         
         // 3. 准备登录请求
-        let loginRequest = LoginRequest(
+        _ = LoginRequest(
             phoneNumber: phoneNumber,
             verificationCode: verificationCode
         )

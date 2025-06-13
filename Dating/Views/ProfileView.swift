@@ -13,8 +13,8 @@ struct ProfileView: View {
                     VStack(spacing: 15) {
                         // 头像
                         ZStack(alignment: .bottomTrailing) {
-                            if let user = appState.currentUser, !user.photos.isEmpty {
-                                Image(user.photos[0])
+                            if let user = appState.currentUser, !user.imageNames.isEmpty {
+                                Image(user.imageNames[0])
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 120, height: 120)
@@ -108,10 +108,10 @@ struct ProfileView: View {
                             .font(.headline)
                             .padding(.leading)
                         
-                        if let photos = appState.currentUser?.photos, !photos.isEmpty {
+                        if let imageNames = appState.currentUser?.imageNames, !imageNames.isEmpty {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 15) {
-                                    ForEach(photos, id: \.self) { photo in
+                                    ForEach(imageNames, id: \.self) { photo in
                                         Image(photo)
                                             .resizable()
                                             .scaledToFill()

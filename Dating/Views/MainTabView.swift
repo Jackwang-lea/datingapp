@@ -7,29 +7,50 @@ struct MainTabView: View {
         TabView(selection: $appState.selectedTab) {
             DiscoverView()
                 .tabItem {
-                    Label("推荐", systemImage: "person.2.fill")
+                    VStack {
+                        Image(systemName: "person.2.fill")
+                            .imageScale(.large)
+                        Text("推荐")
+                            .font(.caption)
+                    }
                 }
                 .tag(0)
             
             MatchesView()
                 .tabItem {
-                    Label("飞", systemImage: "heart.fill")
+                    VStack {
+                        Image(systemName: "heart.fill")
+                            .imageScale(.large)
+                        Text("匹配")
+                            .font(.caption)
+                    }
                 }
                 .tag(1)
             
             MessagesView()
                 .tabItem {
-                    Label("消息", systemImage: "message.fill")
+                    VStack {
+                        Image(systemName: "message.fill")
+                            .imageScale(.large)
+                        Text("消息")
+                            .font(.caption)
+                    }
                 }
                 .tag(2)
             
             ProfileView()
                 .tabItem {
-                    Label("我的", systemImage: "person.fill")
+                    VStack {
+                        Image(systemName: "person.fill")
+                            .imageScale(.large)
+                        Text("我的")
+                            .font(.caption)
+                    }
                 }
                 .tag(3)
         }
         .accentColor(.pink)
+        .tint(.pink)
     }
 }
 

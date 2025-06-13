@@ -1,5 +1,5 @@
 import SwiftUI
-import Kingfisher
+
 
 struct UserCardView: View {
     let user: User
@@ -15,8 +15,8 @@ struct UserCardView: View {
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             TabView(selection: $currentIndex) {
-                ForEach(0..<user.photos.count, id: \.self) { index in
-                    KFImage(URL(string: user.photos[index]))
+                ForEach(0..<user.imageNames.count, id: \.self) { index in
+                    Image(user.imageNames[index])
                         .resizable()
                         .scaledToFill()
                         .frame(width: cardWidth, height: cardHeight)
@@ -43,9 +43,9 @@ struct UserCardView: View {
             .cornerRadius(15)
             
             // 页码指示器
-            if user.photos.count > 1 {
+            if user.imageNames.count > 1 {
                 HStack(spacing: 5) {
-                    ForEach(0..<user.photos.count, id: \.self) { index in
+                    ForEach(0..<user.imageNames.count, id: \.self) { index in
                         Circle()
                             .fill(currentIndex == index ? Color.white : Color.white.opacity(0.5))
                             .frame(width: 6, height: 6)
@@ -150,7 +150,7 @@ struct UserCardView: View {
         .fullScreenCover(isPresented: $isShowingImageBrowser) {
             ImageBrowser(
                 isPresented: $isShowingImageBrowser,
-                imageUrls: user.photos,
+                imageNames: user.imageNames,
                 selectedIndex: $currentIndex
             )
         }
@@ -202,7 +202,7 @@ struct UserCardView_Previews: PreviewProvider {
             name: "张明",
             age: 28,
             bio: "热爱生活，喜欢旅行和美食，寻找志同道合的伴侣。希望找到一个能一起探索世界的人。",
-            photos: [
+            imageNames: [
                 "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=80",
                 "https://images.unsplash.com/photo-1531746020798-e6953c120e11?w=800&q=80"
             ],
