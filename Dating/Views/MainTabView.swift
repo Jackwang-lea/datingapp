@@ -7,13 +7,13 @@ struct MainTabView: View {
         TabView(selection: $appState.selectedTab) {
             DiscoverView()
                 .tabItem {
-                    Label("发现", systemImage: "person.2.fill")
+                    Label("推荐", systemImage: "person.2.fill")
                 }
                 .tag(0)
             
             MatchesView()
                 .tabItem {
-                    Label("匹配", systemImage: "heart.fill")
+                    Label("飞", systemImage: "heart.fill")
                 }
                 .tag(1)
             

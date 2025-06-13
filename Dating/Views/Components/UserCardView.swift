@@ -210,6 +210,7 @@ struct UserCardView_Previews: PreviewProvider {
             location: "北京市朝阳区",
             gender: .male,
             preference: .female,
+            education: .bachelor,
             lastActive: Date()
         )
     }
